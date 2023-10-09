@@ -110,7 +110,7 @@ class JsonPrinter:
         self.first_entry = False
 
         text = json.dumps(data, indent=2, ensure_ascii=False)
-
+        
         if self.levels:
             text = "\n".join("  " * self.levels + line for line in text.splitlines())
         print(text, end="" if self.levels else "\n")
@@ -207,12 +207,16 @@ def main(
             log(f"scraping pool '{pool_id}'")
             scraper = scrapers[pool_id](caching=cache)
             snapshotter = SnapshotMaker(scraper)
-            snapshot = snapshotter.info_map_to_geojson(include_unknown=True)
             if command == "write-geojson":
+                # write-geojson will recreate geojson via get_lot_infos
+                snapshot = snapshotter.info_map_to_geojson(include_all_infos = True, include_unknown=False)
                 filename = Path(inspect.getfile(scraper.__class__)[:-3] + ".geojson")
                 log("writing", filename)
                 filename.write_text(json.dumps(snapshot, indent=2, ensure_ascii=False))
             else:
+                # show-geojson will read geojson and potentially include parkings, which are not yet defined
+                # in geojson with stub information.
+                snapshot = snapshotter.info_map_to_geojson(include_unknown=True)
                 print(json.dumps(snapshot, indent=2, ensure_ascii=False))
 
 
