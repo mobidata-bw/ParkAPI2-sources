@@ -111,7 +111,7 @@ class ScraperBase:
             return infos
 
     def get_lot_info_map(self, required: bool = True) -> Dict[str, LotInfo]:
-        lot_infos = self.get_lot_infos_from_geojson()
+        lot_infos = self.get_lot_infos_from_geojson() if not required else None
         if not lot_infos:
             try:
                 lot_infos = self.get_lot_infos()
