@@ -62,7 +62,18 @@ class LotInfo(Struct):
             source_url: Optional[str] = None,
             address: Optional[str] = None,
             capacity: Optional[int] = None,
+            capacity_disabled: Optional[int] = None,
+            capacity_charging: Optional[int] = None,
+            capacity_women: Optional[int] = None,
+            capacity_carsharing: Optional[int] = None,
             has_live_capacity: bool = False,
+            opening_hours: Optional[str] = None,
+            max_stay: Optional[str] = None,
+            operator: Optional[str] = None,
+            description: Optional[str] = None,
+            has_fee: Optional[bool] = None,
+            fee_description: Optional[str] = None,
+            park_ride: Optional[str] = None, # TODO osm way or two types attributes yes/no _modes 
             latitude: Optional[Union[str, float]] = None,
             longitude: Optional[Union[str, float]] = None,
     ):
@@ -73,6 +84,17 @@ class LotInfo(Struct):
         self.source_url = source_url
         self.address = address or None
         self.capacity = capacity
+        self.capacity_disabled = capacity_disabled
+        self.capacity_charging = capacity_charging
+        self.capacity_women = capacity_women
+        self.capacity_carsharing = capacity_carsharing
+        self.opening_hours = opening_hours
+        self.max_stay = max_stay
+        self.operator = operator
+        self.description = description
+        self.has_fee = has_fee
+        self.fee_description = fee_description
+        self.park_ride = park_ride   
         self.has_live_capacity = has_live_capacity
         self.latitude = latitude
         self.longitude = longitude
